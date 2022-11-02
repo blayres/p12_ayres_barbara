@@ -2,29 +2,29 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Project (**without Docker**)
+## 1. Project (**without Docker**)
 
-### Prerequisites
+### 1.1 Prerequisites
 
 - [NodeJS (**version 12.18**)](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/)
 
 If you are working with several versions of NodeJS, we recommend you install [nvm](https://github.com/nvm-sh/nvm). This tool will allow you to easily manage your NodeJS versions.
 
-### Launching the project
+### 1.2 Launching the project
 
 - Fork the repository
 - Clone it on your computer.
 - The `yarn` command will allow you to install the dependencies.
 - The `yarn dev` command will allow you to run the micro API.
 
-### Mock-up
+## 2. Mock-up
 
 [Figma mock-up](https://www.figma.com/file/BMomGVZqLZb811mDMShpLu/UI-design-Sportify-FR?node-id=0%3A1) 🖼️
 
-## Endpoints
+## 3. Endpoints
 
-### Possible endpoints
+### 3.1 Possible endpoints
 
 This project includes four endpoints that you will be able to use: 
 
@@ -36,7 +36,7 @@ This project includes four endpoints that you will be able to use:
 
 **Warning, currently only two users have been mocked. They have userId 12 and 18 respectively.**
 
-### Examples of queries
+### 3.2 Examples of queries
 
 - `http://localhost:3000/user/12/performance` - Retrieves the performance of the user with id 12
 - `http://localhost:3000/user/18` - Retrieves user 18's main information.
