@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 1. Project (**without Docker**)
+## 1. Project 
 
 ### 1.1 Prerequisites
 
