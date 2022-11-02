@@ -13,7 +13,7 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 
 ### 1.2 Launching the project
 
-- Fork the repository
+- Fork the repository P12-api
 - Clone it on your computer.
 - The `yarn` command will allow you to install the dependencies.
 - The `yarn dev` command will allow you to run the micro API.
