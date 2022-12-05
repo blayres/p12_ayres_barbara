@@ -1,13 +1,18 @@
 import React, { PureComponent } from 'react';
 import { RadialBarChart, RadialBar, Legend, ResponsiveContainer, PolarAngleAxis, Area } from 'recharts';
+import PropTypes from 'prop-types';
 
 
 
-export default function ShapePieChart(props) {
+/**
+ * This function shows the user's score (in percentage) on a graphic
+ * @param {number} score Score in decimal number
+ * @return {chart}       Chart with the final result in percentage
+ */
+function ShapePieChart({score}) {
  
-  console.log(props.data)
   const data = [
-    { name: 'L1', value: props.data.score * 100 }
+    { name: 'L1', value: score * 100 }
   ];
   
   const circleSize = 260;
@@ -47,10 +52,15 @@ export default function ShapePieChart(props) {
           dominantBaseline="middle"
           className="progress-label"
           >
-          {props.data.score * 100}% de votre objectif
+          {score * 100}% de votre objectif
           </text>
         </RadialBarChart>
       </ResponsiveContainer>
     );
   }
 
+  ShapePieChart.propTypes = {
+    score: PropTypes.number
+  }
+
+  export default ShapePieChart;

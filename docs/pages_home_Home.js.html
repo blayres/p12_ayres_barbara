@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/home/Home.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/home/Home.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import './Home.css'
+import IconCalories from '../../components/icons/iconCalories.js'
+import IconProtein from '../../components/icons/iconProtein.js'
+import IconCarbs from '../../components/icons/iconCarbs.js'
+import IconFat from '../../components/icons/iconFat.js'
+import SimpleBarChart from '../../components/recharts/SimpleBarChart.js'
+import SimpleRadarChart from '../../components/recharts/SimpleRadarChart.js'
+import ShapePieChart from '../../components/recharts/ShapePieChart.js'
+import TinyLineChart from '../../components/recharts/TinyLineChart.js'
+import {getUser, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../services/UserService'
+// import {getUser, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../mock/UserMock'
+import React, {useEffect, useState} from 'react'
+
+
+/**
+ * Component for showing the home page with four graphs and the user's nutritional details.
+ * @returns Homepage
+ */
+
+function Home() {
+ 
+    const [user, setUser] = useState([])
+    const [userActivity, setUserActivity] = useState([])
+    const [userAverageSessions, setUserAverageSessions] = useState([])
+    const [userPerformance, setUserPerformance] = useState([])
+
+
+      useEffect(() => {
+        async function init() {
+            const user = await getUser(18)
+            setUser(user)
+    
+            const userActivity = await getUserActivity(18)
+            setUserActivity(userActivity)
+    
+            const userAverageSessions = await getUserAverageSessions(18)
+            setUserAverageSessions(userAverageSessions)
+    
+            const userPerformance = await getUserPerformance(18)
+            setUserPerformance(userPerformance)
+        }
+        init();
+
+    }, []);
+
+    
+        if (!user.data || !userActivity.data || !userAverageSessions.data || !userPerformance.data) {
+            return (
+                &lt;div>
+                    Ops, l'API est indisponible. Réessayer dans quelques minutes.
+                &lt;/div>
+            )
+        }
+        return (
+            &lt;div className='home'>
+                &lt;div className='titlesHome'>
+                    &lt;h1 className='title'>Bonjour &lt;span>{user.data.userInfos.firstName} &lt;/span>&lt;/h1>
+                    &lt;h3 className='subtitle'>Félicitation ! Vous avez explosé vos objectifs hier 👏&lt;/h3>
+                &lt;/div>
+    
+                &lt;div className='mainHome'>
+    
+                    &lt;div className='graphicsHome'>
+                        &lt;div className='graphicTop'>
+                            &lt;SimpleBarChart data={userActivity.data.sessions} />
+                        &lt;/div>
+    
+                        &lt;div className='graphicsBottom'>
+                            &lt;div className='graphicBottomLeft'>
+                                &lt;TinyLineChart data={userAverageSessions.data.sessions} />
+                            &lt;/div>
+                            &lt;div className='graphicBottomMid'>
+                                &lt;SimpleRadarChart data={userPerformance.data} />
+                            &lt;/div>
+                            &lt;div className='graphicBottomRight'>
+                                &lt;ShapePieChart score={user.data.score} />
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+    
+    
+                    &lt;div className='infosHome'>
+    
+                        &lt;div className='info'>
+                            &lt;div className='infoLeft'>
+                                &lt;div className='iconInfo'>
+                                &lt;IconCalories />
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className='infoRight'>
+                                &lt;p className='infoNumber'>{user.data.keyData.calorieCount}kCal&lt;/p>
+                                &lt;p className='infoTitle'>Calories&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+    
+                        &lt;div className='info'>
+                            &lt;div className='infoLeft'>
+                                &lt;div className='iconInfo'>
+                                    &lt;IconProtein />
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className='infoRight'>
+                                &lt;p className='infoNumber'>{user.data.keyData.proteinCount}g&lt;/p>
+                                &lt;p className='infoTitle'>Proteines&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+    
+                        &lt;div className='info'>
+                            &lt;div className='infoLeft'>
+                                &lt;div className='iconInfo'>
+                                    &lt;IconCarbs />
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className='infoRight'>
+                                &lt;p className='infoNumber'>{user.data.keyData.carbohydrateCount}g&lt;/p>
+                                &lt;p className='infoTitle'>Glucides&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+    
+                        &lt;div className='info'>
+                            &lt;div className='infoLeft'>
+                                &lt;div className='iconInfo'>
+                                    &lt;IconFat />
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className='infoRight'>
+                                &lt;p className='infoNumber'>{user.data.keyData.lipidCount}g&lt;/p>
+                                &lt;p className='infoTitle'>Lipides&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+    
+                    &lt;/div>
+    
+                &lt;/div>
+                
+            &lt;/div>
+        )
+    }
+
+export default Home;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#FormatSimpleBarChart">FormatSimpleBarChart</a></li><li><a href="global.html#FormatSimpleRadarChart">FormatSimpleRadarChart</a></li><li><a href="global.html#FormatTinyLineChart">FormatTinyLineChart</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#ShapePieChart">ShapePieChart</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#SimpleBarChart">SimpleBarChart</a></li><li><a href="global.html#SimpleRadarChart">SimpleRadarChart</a></li><li><a href="global.html#TinyLineChart">TinyLineChart</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Nov 16 2022 13:09:41 GMT+0100 (Horário Padrão da Europa Central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

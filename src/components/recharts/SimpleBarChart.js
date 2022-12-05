@@ -1,18 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Surface, Label } from 'recharts';
+import { FormatSimpleBarChart } from '../../formatter/FormatSimpleBarChart';
+import PropTypes from 'prop-types';
 
 
-export default function SimpleBarChart(props) {
-  const dataChart = [];
-  props.data.map((donne, index) => {
-    const donneFormated = {
-      name: index +1,
-      Calories: donne.calories,
-      Poids: donne.kilogram,
-    }
+/**
+ * This function shows the user's activity day by day with kilograms and calories on a graphic.
+ * @param {array} data Kilograms and calories
+ * @return {chart}       Chart with the final result in bar
+ */
 
-    dataChart.push(donneFormated)
-  })
+function SimpleBarChart({data}) {
+  const [dataChart, setDataChart] = useState([])
+
+      useEffect(() => {
+        async function init() {
+            const dataChart = await FormatSimpleBarChart(data)
+            setDataChart(dataChart)
+        }
+        init();
+
+    }, [data]);
 
     return (
       <ResponsiveContainer width="100%" height="100%">
@@ -42,6 +50,11 @@ export default function SimpleBarChart(props) {
     );
   }
 
+  SimpleBarChart.propTypes = {
+    data: PropTypes.array
+  }
 
-  // tooltip: contentStyle={{ backgroundColor: "#E60000", color: "#FFFFFF" }} 
+  export default SimpleBarChart;
+
+  
   

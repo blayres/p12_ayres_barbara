@@ -1,60 +1,27 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect, useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { FormatSimpleRadarChart } from '../../formatter/FormatSimpleRadarChart';
+import PropTypes from 'prop-types';
 
-// const data = [
-//   {
-//     subject: 'Math',
-//     A: 120,
-//     B: 110,
-//     fullMark: 150,
-//   },
-//   {
-//     subject: 'Chinese',
-//     A: 98,
-//     B: 130,
-//     fullMark: 150,
-//   },
-//   {
-//     subject: 'English',
-//     A: 86,
-//     B: 130,
-//     fullMark: 150,
-//   },
-//   {
-//     subject: 'Geography',
-//     A: 99,
-//     B: 100,
-//     fullMark: 150,
-//   },
-//   {
-//     subject: 'Physics',
-//     A: 85,
-//     B: 90,
-//     fullMark: 150,
-//   },
-//   {
-//     subject: 'History',
-//     A: 65,
-//     B: 85,
-//     fullMark: 150,
-//   },
-// ];
 
-export default function SimpleRadarChart(props) {
+/**
+ * This function shows the user's score performance (energy, endurance, etc.) on a graphic
+ * @param {object} data Energy, endurance, etc
+ * @return {chart}      A radar chart with the final result
+ */
 
-  console.log(props.data)
+function SimpleRadarChart({data}) {
 
-  const kind = ["Cardio", "Energie", "Endurance", "Force", "Vitesse", "Intensité"];
-  const dataChart = [];
-  props.data.data.map((donne, index) => {
-    const donneFormated = {
-      subject: kind[donne.kind - 1],
-      value: donne.value,
-      kind: donne.kind,
+  const [dataChart, setDataChart] = useState([])
+
+  useEffect(() => {
+    async function init() {
+        const dataChart = await FormatSimpleRadarChart(data)
+        setDataChart(dataChart)
     }
+    init();
 
-    dataChart.push(donneFormated)
-  })
+}, [data]);
 
 
     return (
@@ -67,3 +34,9 @@ export default function SimpleRadarChart(props) {
       </ResponsiveContainer>
     );
   }
+
+  SimpleRadarChart.propTypes = {
+    data: PropTypes.object
+  }
+
+  export default SimpleRadarChart;

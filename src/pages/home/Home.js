@@ -8,43 +8,53 @@ import SimpleRadarChart from '../../components/recharts/SimpleRadarChart.js'
 import ShapePieChart from '../../components/recharts/ShapePieChart.js'
 import TinyLineChart from '../../components/recharts/TinyLineChart.js'
 import {getUser, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../services/UserService'
-import React from 'react'
+// import {getUser, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../mock/UserMock'
+import React, {useEffect, useState} from 'react'
 
 
+/**
+ * Component for showing the home page with four graphs and the user's nutritional details.
+ * @returns Homepage
+ */
 
-class Home extends React.Component {
+function Home() {
  
-    constructor() {
-        super();
-        this.state = { user: [], userActivity: [], userAverageSessions: [], userPerformance: [] };
-      }
+    const [user, setUser] = useState([])
+    const [userActivity, setUserActivity] = useState([])
+    const [userAverageSessions, setUserAverageSessions] = useState([])
+    const [userPerformance, setUserPerformance] = useState([])
+
+
+      useEffect(() => {
+        async function init() {
+            const user = await getUser(18)
+            setUser(user)
     
-      async componentDidMount() {
-        const user = await getUser(18)
-        this.setState({ user: user });
+            const userActivity = await getUserActivity(18)
+            setUserActivity(userActivity)
+    
+            const userAverageSessions = await getUserAverageSessions(18)
+            setUserAverageSessions(userAverageSessions)
+    
+            const userPerformance = await getUserPerformance(18)
+            setUserPerformance(userPerformance)
+        }
+        init();
 
-        const userActivity = await getUserActivity(18)
-        this.setState({ userActivity: userActivity });
-        // console.log(this.state.user)
-        // console.log(this.state.userActivity)
+    }, []);
 
-        const userAverageSessions = await getUserAverageSessions(18)
-        this.setState({ userAverageSessions: userAverageSessions });
-
-
-        const userPerformance = await getUserPerformance(18)
-        this.setState({ userPerformance: userPerformance });
-  
-      } 
-
-    render() {
-        if (!this.state.user.data || !this.state.userActivity.data || !this.state.userAverageSessions.data || !this.state.userPerformance.data) {
-            return null
+    
+        if (!user.data || !userActivity.data || !userAverageSessions.data || !userPerformance.data) {
+            return (
+                <div>
+                    Ops, l'API est indisponible. Réessayer dans quelques minutes.
+                </div>
+            )
         }
         return (
             <div className='home'>
                 <div className='titlesHome'>
-                    <h1 className='title'>Bonjour <span>{this.state.user.data.userInfos.firstName} </span></h1>
+                    <h1 className='title'>Bonjour <span>{user.data.userInfos.firstName} </span></h1>
                     <h3 className='subtitle'>Félicitation ! Vous avez explosé vos objectifs hier 👏</h3>
                 </div>
     
@@ -52,18 +62,18 @@ class Home extends React.Component {
     
                     <div className='graphicsHome'>
                         <div className='graphicTop'>
-                            <SimpleBarChart data={this.state.userActivity.data.sessions} />
+                            <SimpleBarChart data={userActivity.data.sessions} />
                         </div>
     
                         <div className='graphicsBottom'>
                             <div className='graphicBottomLeft'>
-                                <TinyLineChart data={this.state.userAverageSessions.data.sessions} />
+                                <TinyLineChart data={userAverageSessions.data.sessions} />
                             </div>
                             <div className='graphicBottomMid'>
-                                <SimpleRadarChart data={this.state.userPerformance.data} />
+                                <SimpleRadarChart data={userPerformance.data} />
                             </div>
                             <div className='graphicBottomRight'>
-                                <ShapePieChart data={this.state.user.data} />
+                                <ShapePieChart score={user.data.score} />
                             </div>
                         </div>
                     </div>
@@ -78,7 +88,7 @@ class Home extends React.Component {
                                 </div>
                             </div>
                             <div className='infoRight'>
-                                <p className='infoNumber'>{this.state.user.data.keyData.calorieCount}kCal</p>
+                                <p className='infoNumber'>{user.data.keyData.calorieCount}kCal</p>
                                 <p className='infoTitle'>Calories</p>
                             </div>
                         </div>
@@ -90,7 +100,7 @@ class Home extends React.Component {
                                 </div>
                             </div>
                             <div className='infoRight'>
-                                <p className='infoNumber'>{this.state.user.data.keyData.proteinCount}g</p>
+                                <p className='infoNumber'>{user.data.keyData.proteinCount}g</p>
                                 <p className='infoTitle'>Proteines</p>
                             </div>
                         </div>
@@ -102,7 +112,7 @@ class Home extends React.Component {
                                 </div>
                             </div>
                             <div className='infoRight'>
-                                <p className='infoNumber'>{this.state.user.data.keyData.carbohydrateCount}g</p>
+                                <p className='infoNumber'>{user.data.keyData.carbohydrateCount}g</p>
                                 <p className='infoTitle'>Glucides</p>
                             </div>
                         </div>
@@ -114,7 +124,7 @@ class Home extends React.Component {
                                 </div>
                             </div>
                             <div className='infoRight'>
-                                <p className='infoNumber'>{this.state.user.data.keyData.lipidCount}g</p>
+                                <p className='infoNumber'>{user.data.keyData.lipidCount}g</p>
                                 <p className='infoTitle'>Lipides</p>
                             </div>
                         </div>
@@ -125,7 +135,6 @@ class Home extends React.Component {
                 
             </div>
         )
-    }
     }
 
 export default Home;

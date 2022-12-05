@@ -4,6 +4,11 @@ import IconSwimming from '../icons/iconSwimming';
 import IconBike from '../icons/iconBike';
 import IconBodybuilding from '../icons/iconBodybuilding';
 
+/**
+ * Component for showing the SideBar from the site.
+ * @returns SideBar with 4 icons and copiryght
+ */
+
 function SideBar() {
     return (
         <div className='sideBar' >

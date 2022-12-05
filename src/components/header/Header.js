@@ -1,6 +1,11 @@
 import './Header.css';
 import logo from '../../assets/logo.png';
 
+/**
+ * Component for showing the Header from the site.
+ * @returns Header with logo and fours links
+ */
+
 function Header() {
     return(
         <div className='container h'>
