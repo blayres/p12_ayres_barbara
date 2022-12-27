@@ -128,3 +128,15 @@
     color: #74798C;
     margin: 0;
 }
+
+@media all and (max-width: 1024px) {
+    .mainHome {
+        width: 795px;
+        display: block;
+    }
+
+    .infosHome {
+     margin-top: 30px;
+     flex-direction: initial;
+    }
+  }

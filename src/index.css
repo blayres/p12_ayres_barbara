@@ -14,3 +14,10 @@ body {
   top: 159px;
   left: 224px;
 }
+
+@media all and (max-width: 1024px) {
+  .AppRight {
+    top: 125px;
+    left: 145px;
+  }
+}
