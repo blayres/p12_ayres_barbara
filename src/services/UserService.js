@@ -26,7 +26,7 @@ export const getUserActivity = async (id) => {
  */
 
 export const getUser = async (id) => {
-  // return getUserUserMock(id)
+  // return getUserMock(id)
   try {
     const res = await api.get(`http://localhost:3000/user/${id}`);
     return res.data;

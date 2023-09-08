@@ -7,9 +7,9 @@
 
 export function FormatSimpleBarChart(data) {
     const dataChart = [];
-    data.map((donne, index) => {
+    data.map((donne, day) => {
       const donneFormated = {
-        name: index +1,
+        name: day +1,
         Calories: donne.calories,
         Poids: donne.kilogram,
       }
