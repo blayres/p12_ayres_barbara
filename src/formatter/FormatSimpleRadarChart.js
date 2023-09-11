@@ -6,9 +6,9 @@
  */
 
 export function FormatSimpleRadarChart(data) {
-    const kind = ["Cardio", "Energie", "Endurance", "Force", "Vitesse", "Intensité"];
+    const kind = ["Intensité", "Vitesse", "Force", "Endurance", "Energie", "Cardio"];
     const dataChart = [];
-    data.data.map((donne, index) => {
+    data.data.map((donne) => {
       const donneFormated = {
         subject: kind[donne.kind - 1],
         value: donne.value,
